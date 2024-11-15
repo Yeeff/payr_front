@@ -1,9 +1,10 @@
 import './App.css';
+import UploadInfoPage from './components/pages/UploadInfoPage'
 
 function App() {
   return (
     <div className="App">
-      hola again
+      <UploadInfoPage></UploadInfoPage>
     </div>
   );
 }
