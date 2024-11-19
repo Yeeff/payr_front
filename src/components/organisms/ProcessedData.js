@@ -1,27 +1,22 @@
 import React from 'react';
+import TableOrganism from './TableOrganism';
 
-function ProcessedData({ data }) {
+function ProcessedData({ data, show }) {
+
+  //if (show) {
+  //  data = data.map(({ surcharges, overtimes, overtimeSurcharges, ...rest }) => Object.values(rest));
+  //}
+  
   return (
-    <div className="mt-4">
-      <h5>Processed Data:</h5>
-      <table className="table table-striped">
-        <thead>
-          <tr>
-            <th>User</th>
-            <th>Surcharge Hours</th>
-            <th>Overtime Hours</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((user, index) => (
-            <tr key={index}>
-              <td>{user.name}</td>
-              <td>{user.surchargeHours}</td>
-              <td>{user.overtimeHours}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div>
+      {show &&
+        <div className="mt-4">
+          <TableOrganism
+            headers={['Id','Name'] }
+            data={data}
+            titleTable={"Processed Data:" }
+          ></TableOrganism>
+        </div>}
     </div>
   );
 }

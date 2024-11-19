@@ -2,18 +2,21 @@ import React from 'react';
 import FileProcessingForm from '../organisms/FileProcessingForm';
 import ModalTableOrganisms from '../organisms/ModalTableOrganisms';
 import FileRepresentation from '../molecules/FileRepresentation';
+import ProcessedData from '../organisms/ProcessedData';
 
 const Template = ({
   onFileChange,
   isFileUploaded,
   file,
+  onLoadFile,
 
   onDateChange,
   selectedDate,
 
   onProcess,
   onDownload,
-  onLoadFile,
+  processedData,
+  showProcessedData,
 
   fileFormatErrors,
 
@@ -33,8 +36,6 @@ const Template = ({
         onDateChange={onDateChange}
         selectedDate={selectedDate}
 
-        onProcess={onProcess}
-        onDownload={onDownload}
         onLoadFile={onLoadFile}
       />
 
@@ -47,7 +48,15 @@ const Template = ({
         handleClose={handleFormatErrosModalClose}
       ></ModalTableOrganisms>
 
-      <FileRepresentation uploadedFile={file} show={isFileUploaded}></FileRepresentation>
+      <FileRepresentation
+        uploadedFile={file}
+        show={isFileUploaded}
+        onProcessFile={onProcess}
+        onDownload={onDownload}
+      >
+      </FileRepresentation>
+
+      <ProcessedData data={processedData} show={showProcessedData}></ProcessedData>
 
 
     </main>

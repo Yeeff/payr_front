@@ -1,11 +1,13 @@
 
 import React, { useState } from 'react';
 import Template from '../templates/Template';
-import { uploadFile, fetchProcessedInfo } from '../../Services/FileServices';
-import { parseISO, format } from 'date-fns';
+import { uploadFile, processInfo } from '../../Services/FileServices';
+import { parseISO } from 'date-fns';
 
 const FIRST_DAY_OF_MONTH = 1;
 const FIFTEENTH_DAY_OF_MONTH = 15;
+
+const UNPROCESSABLE_ENTITY_HTTP_ERROR = 422
 
 const UploadInfoPage = () => {
   const [selectedDate, setSelectedDate] = useState();
@@ -13,6 +15,9 @@ const UploadInfoPage = () => {
   const [fileErrors, setFileErrors] = useState();
   const [file, setFile] = useState(null);
   const [isFileUploaded, setIsFileUploaded] = useState(false);
+
+  const [processedData, setProcessedData] = useState();
+  const [showProcessedData, setShowProcessedData] = useState(false);
 
   const [showFormatErrosModal, setShowFormatErrosModal] = useState(false);
 
@@ -40,14 +45,11 @@ const UploadInfoPage = () => {
     }
 
     try {
-      //setError(null); 
-      const data = await fetchProcessedInfo(selectedDate);
-      //setResponseData(data);
-      console.log(data);
+      const response = await processInfo(selectedDate);
+      setProcessedData(response.data); 
+      setShowProcessedData(true);
     } catch (err) {
-      //setError('The attempt to process the data failed');
-      //setResponseData(null);
-      console.error('Error:', err);
+      console.error(err);
     }
   };
 
@@ -66,16 +68,20 @@ const UploadInfoPage = () => {
     try {
       const response = await uploadFile(file);
       setIsFileUploaded(true);
-      setFileErrors();
-
+      setFileErrors(); 
     } catch (error) {
-      if (error.response && error.response.data) {
-        setFileErrors(error.response.data.items );
-        setShowFormatErrosModal(true)
+      if (error.response) {
+        if (error.response.status === UNPROCESSABLE_ENTITY_HTTP_ERROR) {
+          setFileErrors(error.response.data.items);
+          setShowFormatErrosModal(true);
+        } else {
+          console.error(`Error with status ${error.response.status}:`, error.response.data);
+        }
       } else {
         console.error('Unexpected error:', error.message);
       }
     }
+    
   };
 
   return (
@@ -84,13 +90,15 @@ const UploadInfoPage = () => {
       onFileChange={handleFileChange}
       isFileUploaded={isFileUploaded}
       file={file}
+      onLoadFile={onLoadFile}
 
       onDateChange={handleDateChange}
       selectedDate={selectedDate}
 
       onProcess={handleProcess}
       onDownload={handleDownload}
-      onLoadFile={onLoadFile}
+      processedData={processedData}
+      showProcessedData={showProcessedData}      
 
       fileFormatErrors={fileErrors}
 

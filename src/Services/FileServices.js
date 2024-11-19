@@ -11,10 +11,10 @@ export const uploadFile = async (file) => {
     });
 };
 
-export const fetchProcessedInfo = async (year, month, day) => {
-    year=2024; month=9; day=1;
+export const processInfo = async (date) => {
+    let year=2024; let month=9; let day=1;
     const response = await axios.get(`http://localhost:8090/processed-info`, {
         params: { year, month, day },
     });
-    return response.data;
+    return await response;
 };

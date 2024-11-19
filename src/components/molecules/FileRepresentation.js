@@ -1,20 +1,8 @@
 import React, { useState } from 'react';
-import ProcessedData from '../organisms/ProcessedData';
 import axios from 'axios';
 
-function FileRepresentation({ uploadedFile, show }) {
-    const [processedData, setProcessedData] = useState(null);
+function FileRepresentation({ uploadedFile, show, onProcessFile, onDowloadFile }) {
     const [error, setError] = useState('');
-
-    const handleProcessFile = async () => {
-        try {
-            const response = await axios.post('http://localhost:8090/process-file', { fileId: uploadedFile.id });
-            setProcessedData(response.data); // Assume backend returns processed data
-        } catch (err) {
-            setError('Failed to process the file.');
-            console.error(err);
-        }
-    };
 
     const handleDownloadFile = async () => {
         try {
@@ -43,17 +31,15 @@ function FileRepresentation({ uploadedFile, show }) {
                     </div>
 
                     <div className="d-flex">
-                        <button className="btn btn-success me-2" onClick={handleProcessFile}>
+                        <button className="btn btn-success me-2" onClick={onProcessFile}>
                             Process File
                         </button>
-                        <button className="btn btn-secondary" onClick={handleDownloadFile}>
+                        <button className="btn btn-secondary" onClick={onDowloadFile}>
                             Download File
                         </button>
                     </div>
 
                     {error && <p className="text-danger ms-3">{error}</p>}
-
-                    {processedData && <ProcessedData data={processedData} />}
                 </div>}
         </div>
     );
