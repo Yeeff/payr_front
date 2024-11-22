@@ -2,7 +2,7 @@ import React from 'react';
 import FileUpload from '../molecules/FileUpload';
 import FortnightControlledDatePicker from '../molecules/FortnightControlledDatePicker';
 
-const FileProcessingForm = ({ onFileChange, isFileUploaded, onDateChange, selectedDate, onProcess, onDownload, onLoadFile }) => (
+const FileProcessingForm = ({ onFileChange, isFileUploaded, onDateChange, selectedDate,isDateSelectable, onLoadFile }) => (
   <form>
 
     <FileUpload
@@ -10,7 +10,7 @@ const FileProcessingForm = ({ onFileChange, isFileUploaded, onDateChange, select
       onFileChange={onFileChange}
       isFileUploaded={isFileUploaded} />
 
-    <FortnightControlledDatePicker onDateChange={onDateChange} selectedDate ={selectedDate}></FortnightControlledDatePicker>
+    <FortnightControlledDatePicker handleDateChange={onDateChange} selectedDate ={selectedDate} isDateSelectable={isDateSelectable}></FortnightControlledDatePicker>
 
   </form>
 );

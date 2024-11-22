@@ -3,8 +3,8 @@ import Button from '../atoms/Button';
 
 const ActionButtons = ({ onProcess, onDownload }) => (
   <div>
-    <Button onClick={onProcess}>Process Data</Button>
-    <Button onClick={onDownload}>Download Processed File</Button>
+    <Button onClick={onProcess}>Procesar datos</Button>
+    <Button onClick={onDownload}>Descargar datos procesados</Button>
   </div>
 );
 

@@ -2,14 +2,13 @@ import React from 'react';
 
 const TableRowAtom = ({ rowData, headingOrderGuide }) => {
 
-
   return (
     <>
       <tr>
         {
-          headingOrderGuide.map(([value, alias]) => {
+          Object.entries(headingOrderGuide).map(([value, ], index) => {
             return (
-              <td>{Object.entries(rowData)
+              <td key={index}>{Object.entries(rowData)
                 .filter(([key]) => key === value)
                 .map(([, value]) => value)}</td>
             )

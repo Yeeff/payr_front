@@ -5,7 +5,6 @@ import Button from '../atoms/Button';
 
 const ModalTableOrganisms = ({ data, headers, modalTitle, showModal, handleClose }) => {
     
-
     return (
         <div>
             {showModal && (
@@ -17,15 +16,16 @@ const ModalTableOrganisms = ({ data, headers, modalTitle, showModal, handleClose
                                 <button type="button" className="btn-close" onClick={handleClose}></button>
                             </div>
                             <div className="modal-body">
-                                {/* Table inside modal */}
+                                
                                 <table className="table table-bordered">
                                     <TableHeaderAtom headers={headers} />
-                                    <TableBodyMolecule data={data} />
+                                    <TableBodyMolecule data={data}
+                                    headingOrderGuide={headers} />
                                 </table>
                             </div>
                             <div className="modal-footer">
                                 
-                                <Button onClick={handleClose} >Retry</Button>
+                                <Button onClick={handleClose} >Reintentar</Button>
                             </div>
                         </div>
                     </div>

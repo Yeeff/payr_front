@@ -12,11 +12,13 @@ const Template = ({
 
   onDateChange,
   selectedDate,
+  isDateSelectable,
 
   onProcess,
   onDownload,
   processedData,
   showProcessedData,
+  showDowloadButton,
 
   fileFormatErrors,
 
@@ -26,12 +28,13 @@ const Template = ({
 }) => (
   <div id="template">
     <header>
-      <h1>Excel Data Processor</h1>
+      <h1>Extraccion de recargos y horas extras</h1>
     </header>
     <main>
       <FileProcessingForm
         onFileChange={onFileChange}
         isFileUploaded={isFileUploaded}
+        isDateSelectable={isDateSelectable}
 
         onDateChange={onDateChange}
         selectedDate={selectedDate}
@@ -40,7 +43,10 @@ const Template = ({
       />
 
       <ModalTableOrganisms
-        headers={['Error Code', 'Description']}
+        headers={{
+          cell:"Celda",
+          description:"Descripcion"
+        }}
         data={fileFormatErrors}
         modalTitle={"Errors"}
 
@@ -53,6 +59,7 @@ const Template = ({
         show={isFileUploaded}
         onProcessFile={onProcess}
         onDownload={onDownload}
+        showDowloadButton={showDowloadButton}
       >
       </FileRepresentation>
 

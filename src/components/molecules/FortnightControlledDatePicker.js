@@ -1,16 +1,24 @@
 import React, { useState } from 'react';
-import { parseISO, format } from 'date-fns';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
-const FIRST_DAY_OF_MONTH = 1;
-const FIFTEENTH_DAY_OF_MONTH = 15;
+const FortnightControlledDatePicker = ({handleDateChange, selectedDate,isDateSelectable}) => {
 
-const FortnightControlledDatePicker = ({onDateChange, selectedDate}) => {
-
-    return (
-        <div>
-            <input type="date" value={selectedDate} onChange={onDateChange} />
-        </div>
-    );
+  return (
+    <div>
+      <DatePicker
+        selected={selectedDate}
+        onChange={handleDateChange}
+        filterDate={isDateSelectable}
+        dateFormat="yyyy-MM-dd"
+        placeholderText="Selecciona el 1 o el 15"
+        showMonthDropdown
+        showYearDropdown
+        dropdownMode="select"
+      />
+    </div>
+  );
 };
 
 export default FortnightControlledDatePicker;
+

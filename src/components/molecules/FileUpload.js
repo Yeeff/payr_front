@@ -4,10 +4,10 @@ import Button from '../atoms/Button';
 
 const FileUpload = ({onLoadFile, onFileChange, isFileUploaded }) => (
   <div>
-    <label htmlFor="fileUpload">Upload Excel File</label>
+    <label htmlFor="fileUpload">Subir archivo</label>
     <InputFieldFile id="fileUpload" type="file" onChange={onFileChange}/>
-    <Button onClick={onLoadFile}>Load</Button>
-    {isFileUploaded && <p>File uploaded successfully</p>}
+    <Button onClick={onLoadFile}>Cargar</Button>
+    {isFileUploaded && <p>Archivo subido satisfactoriamente</p>}
   </div>
 );
 
