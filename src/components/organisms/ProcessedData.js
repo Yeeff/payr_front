@@ -7,6 +7,7 @@ function ProcessedData({ data, show }) {
   //  data = data.map(({ surcharges, overtimes, overtimeSurcharges, ...rest }) => Object.values(rest));
   //}
 
+
   return (
     <div>
       {show &&
@@ -16,17 +17,17 @@ function ProcessedData({ data, show }) {
               id: "Cedula",
               name: "Nombre",
               
-              totalDayOvertimeHours: "HED",
-              totalHolidayOvertimeHours: "HEF",
-              totalNightOvertimeHours: "HEN",
-              totalNightHolidayOvertimeHours: "HEFN",
+              totalOvertimeHoursDay: "HXD",
+              totalOvertimeHoursHoliday: "HXF",
+              totalOvertimeHoursNight: "HXN",
+              totalOvertimeHoursNightHoliday: "HXFN",
 
-              totalHolidaySurchargeHours: "HRF",
-              totalNightSurchargeHours: "HRN",
-              totalNightHolidaySurchargeHours: "HRNF",
+              totalSurchargeHoursHoliday: "HRF",
+              totalSurchargeHoursNight: "HRN",
+              totalSurchargeHoursNightHoliday: "HRNF",
 
-              totalHolidayOvertimeSurchargeHours: "HERF",
-              totalNightHolidayOvertimeSurchargeHours: "HERFN",
+              totalOvertimeSurchargeHoursHoliday: "HXRF",
+              totalOvertimeSurchargeHoursNightHoliday: "HXRFN",
             }}
             data={data}
             titleTable={"Datos procesados"}
