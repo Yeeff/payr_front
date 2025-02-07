@@ -1,6 +1,6 @@
 import React from 'react';
 import InputFieldFile from '../atoms/InputFieldFile';
-import Button from '../atoms/Button';
+import Button from '../atoms/ButtonPrimary';
 
 const FileUpload = ({onLoadFile, onFileChange, isFileUploaded }) => (
   <div>

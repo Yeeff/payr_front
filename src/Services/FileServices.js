@@ -1,7 +1,8 @@
 import axios from 'axios';
 
-//const baseURL = "https://maxiaseoback.duckdns.org";
-const baseURL = "http://localhost:8090";
+//const baseURL = "http://18.229.136.101:8090/api/file";
+//const baseURL = "http://apifilemaxiaseo_container:8090/api/file";
+const baseURL = "http://localhost:8090/api/file";
 
 export const uploadFile = async (file, date) => {
     const formData = new FormData();
@@ -11,7 +12,7 @@ export const uploadFile = async (file, date) => {
     const month = date.getMonth() + 1;
     const year =date.getFullYear();
 
-    return axios.post(`${baseURL}/upload-excel`, formData, {
+    return axios.post(`${baseURL}`, formData, {
         headers: {
             'Content-Type': 'multipart/form-data',
         },
@@ -19,21 +20,32 @@ export const uploadFile = async (file, date) => {
     });
 };
 
-export const processInfo = async (date) => {
+export const processInfo = async (fileName) => {
 
-    const day = date.getDate();
-    const month = date.getMonth() + 1;
-    const year =date.getFullYear();
-    
-    const response = await axios.get(`${baseURL}/processed-info`, {
-        params: { year, month, day },
-    });
+   
+    const response = await axios.get(`${baseURL}/processed-info/${fileName}`);
     return await response;
 };
 
-export const downloadFile = async () => {
-    const response = await axios.get(`${baseURL}/download`, {
+export const downloadFile = async (fileNameId) => {
+    const response = await axios.get(`${baseURL}/download/${fileNameId}`, {
         responseType: 'blob',
       });
       return response;
+};
+
+export const downloaSiigodFile = async (fileNameId) => {
+    const response = await axios.get(`${baseURL}/download-siigo/${fileNameId}`, {
+        responseType: 'blob',
+      });
+      return response;
+};
+
+export const getFiles = async () => {
+    const response = await axios.get(`${baseURL}`);
+      return response;
+};
+
+export const deleteFile = async (fileName) => {
+    await axios.delete(`${baseURL}/${fileName}`);
 };

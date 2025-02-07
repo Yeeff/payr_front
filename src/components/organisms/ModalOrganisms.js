@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
-import TableBodyMolecule from '../molecules/TableBodyMolecule';
-import TableHeaderAtom from '../atoms/TableHeaderAtom';
-import Button from '../atoms/Button';
+import Button from '../atoms/ButtonPrimary';
 
-const ModalTableOrganisms = ({ data, headers, modalTitle, showModal, handleClose }) => {
-    
+const ModalOrganisms = ({children, modalTitle, showModal, handleClose }) => {
+
     return (
         <div>
             {showModal && (
@@ -16,16 +14,13 @@ const ModalTableOrganisms = ({ data, headers, modalTitle, showModal, handleClose
                                 <button type="button" className="btn-close" onClick={handleClose}></button>
                             </div>
                             <div className="modal-body">
-                                
-                                <table className="table table-bordered">
-                                    <TableHeaderAtom headers={headers} />
-                                    <TableBodyMolecule data={data}
-                                    headingOrderGuide={headers} />
-                                </table>
+
+                                {children}
+
                             </div>
                             <div className="modal-footer">
-                                
-                                <Button onClick={handleClose} >Reintentar</Button>
+
+                                <Button onClick={handleClose} >OK</Button>
                             </div>
                         </div>
                     </div>
@@ -35,4 +30,4 @@ const ModalTableOrganisms = ({ data, headers, modalTitle, showModal, handleClose
     );
 };
 
-export default ModalTableOrganisms;
+export default ModalOrganisms;

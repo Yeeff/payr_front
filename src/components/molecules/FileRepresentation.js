@@ -1,31 +1,26 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import ButtonPrimary from "../atoms/ButtonPrimary";
+import { useFileContext } from '../../context/FileListContext';
+import ButtonDanger from "../atoms/ButtonDanger";
 
-function FileRepresentation({ uploadedFile, show, onProcessFile, onDownload, showDowloadButton }) {
-    const [error, setError] = useState('');
+function FileRepresentation({ id, uploadedFileName, handleProcess, onDeleteFile, loading }) {
+
 
     return (
-        <div>
-            {show &&
-                <div className="d-flex align-items-center mt-3">
+        <div className="d-flex align-items-center mt-3">
 
-                    <div className="me-3">
-                        <h5>{uploadedFile.name}</h5>
-                    </div>
+            <div className="me-3">
+                <h6>{uploadedFileName}</h6>
+            </div>
 
-                    <div className="d-flex">
-                        <button className="btn btn-success me-2" onClick={onProcessFile}>
-                            Procesar archivo
-                        </button>
-                        {showDowloadButton
-                            && <button className="btn btn-secondary" onClick={onDownload}>
-                                Descargar archivo
-                            </button>}
+            <div className="d-flex">
 
-                    </div>
+                <ButtonPrimary onClick={() => handleProcess(uploadedFileName)} disabled={loading}>Procesar archivo</ButtonPrimary>
 
-                    {error && <p className="text-danger ms-3">{error}</p>}
-                </div>}
+                <ButtonDanger onClick={() => onDeleteFile(uploadedFileName)} disabled={loading}>Borrar</ButtonDanger>
+
+
+            </div>
+
         </div>
     );
 }

@@ -1,8 +1,7 @@
 import React from 'react';
 import FileProcessingForm from '../organisms/FileProcessingForm';
-import ModalTableOrganisms from '../organisms/ModalTableOrganisms';
-import FileRepresentation from '../molecules/FileRepresentation';
 import ProcessedData from '../organisms/ProcessedData';
+import FileListOrganism from '../organisms/FileListOrganism';
 
 const Template = ({
   onFileChange,
@@ -16,14 +15,12 @@ const Template = ({
 
   onProcess,
   onDownload,
+  handleSiigoFormat,
+  fileNameId,
   processedData,
   showProcessedData,
-  showDowloadButton,
 
-  fileFormatErrors,
-
-  showFormatErrosModal,
-  handleFormatErrosModalClose
+  onSeeEmployeeDetails
 
 }) => (
   <div id="template">
@@ -31,6 +28,7 @@ const Template = ({
       <h1>Extraccion de recargos y horas extras</h1>
     </header>
     <main>
+
       <FileProcessingForm
         onFileChange={onFileChange}
         isFileUploaded={isFileUploaded}
@@ -42,28 +40,9 @@ const Template = ({
         onLoadFile={onLoadFile}
       />
 
-      <ModalTableOrganisms
-        headers={{
-          cell:"Celda",
-          description:"Descripcion"
-        }}
-        data={fileFormatErrors}
-        modalTitle={"Errors"}
+      <FileListOrganism></FileListOrganism>
 
-        showModal={showFormatErrosModal}
-        handleClose={handleFormatErrosModalClose}
-      ></ModalTableOrganisms>
-
-      <FileRepresentation
-        uploadedFile={file}
-        show={isFileUploaded}
-        onProcessFile={onProcess}
-        onDownload={onDownload}
-        showDowloadButton={showDowloadButton}
-      >
-      </FileRepresentation>
-
-      <ProcessedData data={processedData} show={showProcessedData}></ProcessedData>
+      <ProcessedData onSeeEmployeeDetails={onSeeEmployeeDetails} data={processedData} show={showProcessedData} handleDownload={onDownload} handleSiigoFormat={handleSiigoFormat} fileNameId={fileNameId}></ProcessedData>
 
 
     </main>
