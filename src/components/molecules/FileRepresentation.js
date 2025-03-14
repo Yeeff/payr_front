@@ -1,28 +1,30 @@
-import ButtonPrimary from "../atoms/ButtonPrimary";
-import { useFileContext } from '../../context/FileListContext';
-import ButtonDanger from "../atoms/ButtonDanger";
+import React from "react";
+import Card from "react-bootstrap/Card";
+import ButtonAtom from "../atoms/ButtonAtom";
+import { ListGroup } from "react-bootstrap";
+import { FaTrash, FaPlay } from "react-icons/fa"; // Icons for buttons
 
 function FileRepresentation({ id, uploadedFileName, handleProcess, onDeleteFile, loading }) {
+  return (
+    <Card className="mb-3 shadow-sm">
 
+      <ListGroup variant="flush">
+        <ListGroup.Item className="d-flex justify-content-between align-items-center">
+          <span className="text-truncate">{uploadedFileName}</span>
 
-    return (
-        <div className="d-flex align-items-center mt-3">
+          <div className="d-flex gap-2">
+            <ButtonAtom variant={'secondary'} onClick={() => handleProcess(uploadedFileName)} disabled={loading}>
+              <FaPlay className="me-2" /> Procesar
+            </ButtonAtom>
 
-            <div className="me-3">
-                <h6>{uploadedFileName}</h6>
-            </div>
-
-            <div className="d-flex">
-
-                <ButtonPrimary onClick={() => handleProcess(uploadedFileName)} disabled={loading}>Procesar archivo</ButtonPrimary>
-
-                <ButtonDanger onClick={() => onDeleteFile(uploadedFileName)} disabled={loading}>Borrar</ButtonDanger>
-
-
-            </div>
-
-        </div>
-    );
+            <ButtonAtom variant={'danger'} onClick={() => onDeleteFile(uploadedFileName)} disabled={loading}>
+              <FaTrash className="me-2" /> Borrar
+            </ButtonAtom>
+          </div>
+        </ListGroup.Item>
+      </ListGroup>
+    </Card>
+  );
 }
 
 export default FileRepresentation;

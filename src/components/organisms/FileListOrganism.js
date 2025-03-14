@@ -1,31 +1,41 @@
-import FileRepresentation from '../molecules/FileRepresentation';
-import { useFileContext } from '../../context/FileListContext';
-import { useEffect } from 'react';
-
-import LoderSpinner from '../atoms/LoderSpinner';
+import FileRepresentation from "../molecules/FileRepresentation";
+import { useFileContext } from "../../context/FileListContext";
+import { useEffect } from "react";
+import { Container, Row, Col, Spinner, Card } from "react-bootstrap";
 
 function FileListOrganism() {
+  const { fileList, onFirstLoad, handleProcess, onDeleteFile, loading } = useFileContext();
 
-    const { fileList, onFirstLoad, handleProcess, onDeleteFile, loding } = useFileContext();
+  useEffect(() => {
+    onFirstLoad();
+  }, []);
 
-    useEffect(() => {
-        onFirstLoad();
-    }, []);
+  return (
+    <Container className="mt-4">
+      {loading && (
+        <div className="text-center my-4">
+          <Spinner animation="border" variant="primary" />
+          <p>Extrayendo datos...</p>
+        </div>
+      )}
 
-    return (<>
+      <Row>
+        {fileList.map((file) => (
+          <Col key={file.id} md={12} className="mb-3">
 
-        <LoderSpinner loding={loding}></LoderSpinner>
-
-        {fileList.map((file) =>
             <FileRepresentation
-                id={file.id}
-                uploadedFileName={file.name}
-                handleProcess={handleProcess}
-                onDeleteFile={onDeleteFile}
-                loading={loding}
-            ></FileRepresentation>
-        )}
-    </>);
+              id={file.id}
+              uploadedFileName={file.name}
+              handleProcess={handleProcess}
+              onDeleteFile={onDeleteFile}
+              loading={loading}
+            />
+
+          </Col>
+        ))}
+      </Row>
+    </Container>
+  );
 }
 
 export default FileListOrganism;

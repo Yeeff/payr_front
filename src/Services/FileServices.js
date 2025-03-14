@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-//const baseURL = "http://18.229.136.101:8090/api/file";
+//const baseURL = "http://18.228.28.221:8090/api/file";
 //const baseURL = "http://apifilemaxiaseo_container:8090/api/file";
 const baseURL = "http://localhost:8090/api/file";
 
@@ -18,13 +18,6 @@ export const uploadFile = async (file, date) => {
         },
         params: { year, month, day },
     });
-};
-
-export const processInfo = async (fileName) => {
-
-   
-    const response = await axios.get(`${baseURL}/processed-info/${fileName}`);
-    return await response;
 };
 
 export const downloadFile = async (fileNameId) => {

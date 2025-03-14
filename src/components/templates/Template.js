@@ -3,6 +3,8 @@ import FileProcessingForm from '../organisms/FileProcessingForm';
 import ProcessedData from '../organisms/ProcessedData';
 import FileListOrganism from '../organisms/FileListOrganism';
 
+import { Container } from "react-bootstrap";
+
 const Template = ({
   onFileChange,
   isFileUploaded,
@@ -24,12 +26,16 @@ const Template = ({
 
 }) => (
   <div id="template">
-    <header>
-      <h1>Extraccion de recargos y horas extras</h1>
+    <header className="bg-primary text-white py-3 shadow-sm">
+      <Container className="text-center">
+        <h1 className="fw-bold">Módulo de Nómina</h1>
+      </Container>
     </header>
+
     <main>
 
-      <FileProcessingForm
+    <Container>
+    <FileProcessingForm
         onFileChange={onFileChange}
         isFileUploaded={isFileUploaded}
         isDateSelectable={isDateSelectable}
@@ -45,6 +51,8 @@ const Template = ({
       <ProcessedData onSeeEmployeeDetails={onSeeEmployeeDetails} data={processedData} show={showProcessedData} handleDownload={onDownload} handleSiigoFormat={handleSiigoFormat} fileNameId={fileNameId}></ProcessedData>
 
 
+    </Container>
+    
     </main>
   </div>
 );

@@ -1,7 +1,8 @@
 
 import React, { useState } from 'react';
 import Template from '../templates/Template';
-import { uploadFile, processInfo, downloadFile, getFiles, deleteFile, downloaSiigodFile } from '../../Services/FileServices';
+import { uploadFile, downloadFile, getFiles, deleteFile, downloaSiigodFile } from '../../Services/FileServices';
+import {  processInfo } from '../../Services/PayrollServices';
 import { isValid } from 'date-fns';
 import { FileListProvider } from '../../context/FileListContext';
 import { ProcessedDataProvider } from '../../context/ProcessedDataContext';
@@ -11,7 +12,7 @@ import useModal from '../../hooks/useModal';
 import ContentTypeModal from '../../utils/Constanst';
 
 const FIRST_DAY_OF_MONTH = 1;
-const FIFTEENTH_DAY_OF_MONTH = 15;
+const SIXTEENTH_DAY_OF_MONTH = 16;
 
 const UNPROCESSABLE_ENTITY_HTTP_ERROR = 422
 
@@ -28,7 +29,7 @@ const UploadInfoPage = () => {
   const [personPayrollDetails, setPersonPayrollDetails] = useState(false);
 
 
-  const [isFileListLoding, setisFileListLoding] = useState(false);
+  const [isFileListLoading, setisFileListLoading] = useState(false);
   const [isDownlodingFile, setisDownlodingFile] = useState(false);
   const [isSavingFile, setisSavingFile] = useState(false);
 
@@ -43,7 +44,7 @@ const UploadInfoPage = () => {
   const isDateSelectable = (date) => {
     if (!isValid(date)) return false;
     const day = date.getDate();
-    return day === FIRST_DAY_OF_MONTH || day === FIFTEENTH_DAY_OF_MONTH;
+    return day === FIRST_DAY_OF_MONTH || day === SIXTEENTH_DAY_OF_MONTH;
   };
 
   const handleDateChange = (date) => {
@@ -61,17 +62,17 @@ const UploadInfoPage = () => {
   }
 
   const handleDeleteFile = (fileName) => {
-    setisFileListLoding(true);
+    setisFileListLoading(true);
 
     deleteFile(fileName);
     getFilesFromApi();
 
-    setisFileListLoding(false);
+    setisFileListLoading(false);
   }
 
   const handleProcess = async (fileName) => {
 
-    setisFileListLoding(true);
+    setisFileListLoading(true);
 
     try {
       const response = await processInfo(fileName);
@@ -81,7 +82,7 @@ const UploadInfoPage = () => {
     } catch (err) {
       console.error(err);
     } finally {
-      setisFileListLoding(false);
+      setisFileListLoading(false);
     }
   };
 
@@ -180,7 +181,7 @@ const UploadInfoPage = () => {
 
   return (
     <FileListProvider onShowModalWithEmployeeDetails={onShowModalWithEmployeeDetails}
-    fileList={fileList} handleProcess={handleProcess} onFirstLoad={getFilesFromApi} onDeleteFile={handleDeleteFile} loding={isFileListLoding}>
+    fileList={fileList} handleProcess={handleProcess} onFirstLoad={getFilesFromApi} onDeleteFile={handleDeleteFile} loading={isFileListLoading}>
       <ProcessedDataProvider loding={isDownlodingFile}>
         <FileSavingFormProvider loding={isSavingFile}>
 
