@@ -1,13 +1,10 @@
 import axios from 'axios';
 
-//const baseURL = "http://18.228.28.221:8090/api/file";
-//const baseURL = "http://apifilemaxiaseo_container:8090/api/file";
-const baseURL = "http://localhost:8092/api/payroll";
+const PAYROLL_API_URL = process.env.REACT_APP_PAYROLL_API_URL || "http://localhost:8092/api/payroll";
 
 export const processInfo = async (fileName) => {
-
    
-    const response = await axios.get(`${baseURL}/process-info/${fileName}`);
+    const response = await axios.get(`${PAYROLL_API_URL}/process-info/${fileName}`);
     return await response;
 };
 
