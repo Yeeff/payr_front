@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const PAYROLL_API_URL = process.env.REACT_APP_PAYROLL_API_URL || "http://localhost:8092/api/payroll";
+const PAYROLL_API_URL = "https://maxi-api-payroll-1034515474137.us-central1.run.app";
 
 export const processInfo = async (fileName) => {
    

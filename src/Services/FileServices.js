@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const FILE_API_URL = process.env.REACT_APP_FILE_API_URL || "http://localhost:8090/api/file";
+const FILE_API_URL = "https://maxi-api-file-1034515474137.southamerica-east1.run.app";
 
 export const uploadFile = async (file, date) => {
     const formData = new FormData();
