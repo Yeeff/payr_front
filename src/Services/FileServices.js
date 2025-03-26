@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const FILE_API_URL = "https://maxi-api-file-1034515474137.southamerica-east1.run.app";
+const FILE_API_URL = "https://maxi-api-file-1034515474137.southamerica-east1.run.app/api/file";
 
 export const uploadFile = async (file, date) => {
     const formData = new FormData();
