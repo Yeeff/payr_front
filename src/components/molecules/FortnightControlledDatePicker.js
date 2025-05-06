@@ -1,32 +1,11 @@
-import { useEffect, useState } from "react";
 import { Form } from "react-bootstrap";
-import { getFormsPeriods } from "../../Services/EmployChangesApi"; // adjust import as needed
 
-const FortnightControlledDatePicker = ({ handleDateChange, selectedDate, isDateSelectable }) => {
-  const [selectedFormId, setSelectedFormId] = useState(null);
-  const [formsPeriods, setFormsPeriods] = useState([]);
-
-  useEffect(() => {
-    (async () => {
-      const periods = await getFormsPeriods();
-      const filtered = periods.data.data.filter(
-        (form) =>
-          Array.isArray(form.formsType) &&
-          form.formsType.some((type) => type.name === "Quincenal")
-      );
-      setFormsPeriods(filtered);
-    })();
-  }, []);
-
-  const handleChange = (e) => {
-    const id = Number(e.target.value);
-    setSelectedFormId(id);
-  };
+const FortnightControlledDatePicker = ({ handleDateChange, formsPeriods, selectedFormId }) => {
 
   return (
     <Form.Group>
       <Form.Label>📅 Selecciona un rango de fechas</Form.Label>
-      <Form.Select value={selectedFormId || ""} onChange={handleChange}>
+      <Form.Select value={selectedFormId || ""} onChange={handleDateChange}>
         <option value="" disabled>
           Selecciona un período
         </option>

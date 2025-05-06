@@ -3,7 +3,7 @@ import axios from 'axios';
 //const FILE_API_URL = "https://maxi-api-file-1034515474137.southamerica-east1.run.app/api/file";
 const FILE_API_URL = "http://localhost:8090/api/file";
 
-export const uploadFile = async (file, date) => {
+export const uploadFile = async (file, date, selectedFormId) => {
     const formData = new FormData();
     formData.append('file', file);
 

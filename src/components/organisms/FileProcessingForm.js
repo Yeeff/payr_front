@@ -10,8 +10,11 @@ const FileProcessingForm = ({
   onDateChange,
   selectedDate,
   isDateSelectable,
+  formsPeriods,
+  selectedFormId,
   onLoadFile,
 }) => {
+
   const { loding } = useFileSavingFormContext();
 
   return (
@@ -34,6 +37,8 @@ const FileProcessingForm = ({
                 handleDateChange={onDateChange}
                 selectedDate={selectedDate}
                 isDateSelectable={isDateSelectable}
+                formsPeriods = {formsPeriods}
+                selectedFormId={selectedFormId}
               />
             </Col>
 

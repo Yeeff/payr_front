@@ -1,9 +1,9 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Template from '../templates/Template';
 import { uploadFile, downloadFile, getFiles, deleteFile, downloaSiigodFile } from '../../Services/FileServices';
-import {  processInfo } from '../../Services/PayrollServices';
-import { isValid } from 'date-fns';
+import { getFormsPeriods } from '../../Services/EmployChangesApi';
+import { processInfo } from '../../Services/PayrollServices';
+import { isValid, parse } from 'date-fns';
 import { FileListProvider } from '../../context/FileListContext';
 import { ProcessedDataProvider } from '../../context/ProcessedDataContext';
 import { FileSavingFormProvider } from '../../context/FileSavingFormContext'
@@ -35,6 +35,21 @@ const UploadInfoPage = () => {
 
   const [showModalByType, setShowModalByType] = useState(false);
 
+  const [selectedFormId, setSelectedFormId] = useState(null);
+  const [formsPeriods, setFormsPeriods] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      const periods = await getFormsPeriods();
+      const filtered = periods.data.data.filter(
+        (form) =>
+          Array.isArray(form.formsType) &&
+          form.formsType.some((type) => type.name === "Quincenal")
+      );
+      setFormsPeriods(filtered);
+    })();
+  }, []);
+
   const handleModalClose = () => {
     setFileErrors();
     setShowModalByType(null);
@@ -47,11 +62,20 @@ const UploadInfoPage = () => {
     return day === FIRST_DAY_OF_MONTH || day === SIXTEENTH_DAY_OF_MONTH;
   };
 
-  const handleDateChange = (date) => {
-    if (isDateSelectable(date)) {
-      setSelectedDate(date);
+  const handleDateChange = (e) => {
+    const id = e.target.value;
+    setSelectedFormId(id); // This updates state for future renders
+
+    const filteredForm = formsPeriods.find((period) => period.id == id);
+
+    const parsedDate = typeof filteredForm.dateStart === 'string'
+      ? parse(filteredForm.dateStart, 'yyyy/MM/dd', new Date())
+      : filteredForm.dateStart;
+
+    if (isDateSelectable(parsedDate)) {
+      setSelectedDate(parsedDate);
     } else {
-      alert('Please select the 1st or 15th of the month.');
+      alert('El periodo de la planilla no es correct para el rango de una quincena.');
     }
   };
 
@@ -129,15 +153,15 @@ const UploadInfoPage = () => {
 
 
     if (!file || !selectedDate) {
-      alert('Por favor escoge un archivo y una fecha primero.');
+      alert('Para continuar debes elegir un archivo y un periodo.');
       return
     }
 
     setisSavingFile(true);
 
     try {
-      const response = await uploadFile(file, selectedDate);
-      
+      const response = await uploadFile(file, selectedDate,selectedFormId );
+
       getFilesFromApi();
 
     } catch (error) {
@@ -150,7 +174,7 @@ const UploadInfoPage = () => {
           }));
 
           onShowModalWithFileErrorList(formatedToDataTable);
-          
+
         } else {
           console.error(`Error with status ${error.response.status}:`, error.response.data);
         }
@@ -164,7 +188,7 @@ const UploadInfoPage = () => {
 
   };
 
-  const onShowModalWithFileErrorList = (FormatedToDataTable)=>{
+  const onShowModalWithFileErrorList = (FormatedToDataTable) => {
     setFileErrors(FormatedToDataTable);
     setShowModalByType(ContentTypeModal.ERROR_FILE_LIST);
 
@@ -181,7 +205,7 @@ const UploadInfoPage = () => {
 
   return (
     <FileListProvider onShowModalWithEmployeeDetails={onShowModalWithEmployeeDetails}
-    fileList={fileList} handleProcess={handleProcess} onFirstLoad={getFilesFromApi} onDeleteFile={handleDeleteFile} loading={isFileListLoading}>
+      fileList={fileList} handleProcess={handleProcess} onFirstLoad={getFilesFromApi} onDeleteFile={handleDeleteFile} loading={isFileListLoading}>
       <ProcessedDataProvider loding={isDownlodingFile}>
         <FileSavingFormProvider loding={isSavingFile}>
 
@@ -196,6 +220,8 @@ const UploadInfoPage = () => {
             onDateChange={handleDateChange}
             selectedDate={selectedDate}
             isDateSelectable={isDateSelectable}
+            formsPeriods={formsPeriods}
+            selectedFormId={selectedFormId}
 
             onDownload={handleDownload}
             handleSiigoFormat={handleSiigoFormat}

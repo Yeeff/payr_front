@@ -14,6 +14,8 @@ const Template = ({
   onDateChange,
   selectedDate,
   isDateSelectable,
+  formsPeriods,
+  selectedFormId,
 
   onProcess,
   onDownload,
@@ -38,10 +40,12 @@ const Template = ({
     <FileProcessingForm
         onFileChange={onFileChange}
         isFileUploaded={isFileUploaded}
-        isDateSelectable={isDateSelectable}
 
+        isDateSelectable={isDateSelectable}
         onDateChange={onDateChange}
         selectedDate={selectedDate}
+        formsPeriods = {formsPeriods}
+        selectedFormId={selectedFormId}
 
         onLoadFile={onLoadFile}
       />
