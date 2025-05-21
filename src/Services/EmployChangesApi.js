@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const PAYROLL_CHANGES_URL = "http://localhost:4203/api/v1/form-period/available"
+const PAYROLL_CHANGES_URL = "https://maxi-payroll-api-1034515474137.southamerica-east1.run.app/api/v1/form-period/available"
 
 export const getFormsPeriods = async () => {
 
