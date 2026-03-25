@@ -4,7 +4,7 @@ import ButtonAtom from "../atoms/ButtonAtom";
 import { ListGroup } from "react-bootstrap";
 import { FaTrash, FaPlay } from "react-icons/fa"; // Icons for buttons
 
-function FileRepresentation({ id, uploadedFileName, handleProcess, onDeleteFile, loading }) {
+function FileRepresentation({ id, uploadedFileName,formId, handleProcess, onDeleteFile, loading }) {
   return (
     <Card className="mb-3 shadow-sm">
 
@@ -13,7 +13,7 @@ function FileRepresentation({ id, uploadedFileName, handleProcess, onDeleteFile,
           <span className="text-truncate">{uploadedFileName}</span>
 
           <div className="d-flex gap-2">
-            <ButtonAtom variant={'secondary'} onClick={() => handleProcess(uploadedFileName)} disabled={loading}>
+            <ButtonAtom variant={'secondary'} onClick={() => handleProcess(formId, uploadedFileName)} disabled={loading}>
               <FaPlay className="me-2" /> Procesar
             </ButtonAtom>
 

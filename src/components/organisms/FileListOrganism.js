@@ -26,6 +26,7 @@ function FileListOrganism() {
             <FileRepresentation
               id={file.id}
               uploadedFileName={file.name}
+              formId={file.formId}
               handleProcess={handleProcess}
               onDeleteFile={onDeleteFile}
               loading={loading}

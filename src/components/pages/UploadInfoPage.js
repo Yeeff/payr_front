@@ -94,13 +94,13 @@ const UploadInfoPage = () => {
     setisFileListLoading(false);
   }
 
-  const handleProcess = async (fileName) => {
+  const handleProcess = async (formId, uploadedFileName) => {
 
     setisFileListLoading(true);
 
     try {
-      const response = await processInfo(fileName);
-      setFileNameId(fileName);
+      const response = await processInfo(formId);
+      setFileNameId(uploadedFileName);
       setProcessedData(response.data);
       setShowProcessedData(true);
     } catch (err) {
